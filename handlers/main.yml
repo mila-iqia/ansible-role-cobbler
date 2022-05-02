@@ -1,0 +1,23 @@
+---
+- name: Update repository cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Restart apache
+  ansible.builtin.service:
+    name: apache2
+    state: reloaded
+
+- name: Restart cobbler
+  ansible.builtin.service:
+    name: cobblerd
+    state: restarted
+  notify:
+    - Run cobbler mkloaders (would need a plugin)
+    - Run cobbler sync (would need a plugin)
+
+- name: Run cobbler mkloaders (would need a plugin)
+  ansible.builtin.command: cobbler mkloaders
+
+- name: Run cobbler sync (would need a plugin)
+  ansible.builtin.command: cobbler sync

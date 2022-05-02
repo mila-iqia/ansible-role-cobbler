@@ -1,0 +1,59 @@
+---
+- name: Configure repositories
+  ansible.builtin.include_tasks:
+    file: "repositories-{{ ansible_facts['os_family'] }}.yml"
+  when: cobbler_configure_repos
+
+- name: Install Cobbler
+  ansible.builtin.include_tasks:
+    file: "install-{{ ansible_facts['os_family'] }}.yml"
+
+- name: Configure Apache web server
+  ansible.builtin.include_tasks:
+    file: "apache-{{ ansible_facts['os_family'] }}.yml"
+
+- name: Write local settings
+  ansible.builtin.template:
+    src: local.settings.j2
+    dest: /etc/cobbler/settings.d/local.settings
+    owner: root
+    group: root
+    mode: 0640
+  when: cobbler_settings is defined and cobbler_settings
+  notify:
+    - Restart cobbler
+
+# If no cobbler_settings are defined, remove the file
+- name: Remove local settings
+  ansible.builtin.file:
+    path: /etc/cobbler/settings.d/local.settings
+    state: absent
+  when: cobbler_settings is not defined or not cobbler_settings
+  notify:
+    - Restart cobbler
+
+- name: Apply workarounds to known issues
+  ansible.builtin.include_tasks:
+    file: "workarounds.yml"
+
+- name: Install users.digest
+  ansible.builtin.template:
+    src: users.digest.j2
+    dest: /etc/cobbler/users.digest
+    owner: root
+    group: root
+    mode: 0640
+  no_log: true
+  notify:
+    - Restart cobbler
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Configure distros
+  ansible.builtin.include_tasks:
+    file: "distros.yml"
+
+- name: Configure profiles
+  ansible.builtin.include_tasks:
+    file: "profiles.yml"

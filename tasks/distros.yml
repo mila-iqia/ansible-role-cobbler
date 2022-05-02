@@ -1,0 +1,55 @@
+---
+- name: Ensure directories for netboot initrd images exist
+  ansible.builtin.file:
+    path: "{{ item.properties.initrd | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop: "{{ cobbler_distros }}"
+  loop_control:
+    label: "{{ item.properties.initrd | dirname }}"
+
+- name: Import netboot initrd images
+  ansible.builtin.get_url:
+    url: "{{ item.netboot.initrd_url }}"
+    checksum: "{{ item.netboot.initrd_checksum | default(omit) }}"
+    dest: "{{ item.properties.initrd }}"
+  loop: "{{ cobbler_distros }}"
+  loop_control:
+    label: "{{ item.netboot.initrd_url }} -> {{ item.properties.initrd }}"
+
+- name: Ensure directories for netboot kernel images exist
+  ansible.builtin.file:
+    path: "{{ item.properties.kernel | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop: "{{ cobbler_distros }}"
+  loop_control:
+    label: "{{ item.properties.kernel | dirname }}"
+
+- name: Import netboot kernel images
+  ansible.builtin.get_url:
+    url: "{{ item.netboot.kernel_url }}"
+    checksum: "{{ item.netboot.kernel_checksum | default(omit) }}"
+    dest: "{{ item.properties.kernel }}"
+  loop: "{{ cobbler_distros }}"
+  loop_control:
+    label: "{{ item.netboot.kernel_url }} -> {{ item.properties.kernel }}"
+
+- name: Configure Cobbler distros
+  cobbler_distro:
+    host: "{{ cobbler_api_host }}"
+    use_ssl: "{{ cobbler_api_use_ssl | default(omit) }}"
+    username: "{{ cobbler_api_username }}"
+    password: "{{ cobbler_api_password }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(omit) }}"
+    properties: "{{ item.properties }}"
+  delegate_to: localhost
+  become: False
+  loop: "{{ cobbler_distros }}"
+  loop_control:
+    label: "{{ item.name }}"

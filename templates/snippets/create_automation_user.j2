@@ -1,0 +1,13 @@
+groupadd -g {{ cobbler_automation_gid }} {{ cobbler_automation_group }}
+useradd -u {{ cobbler_automation_uid }} -g {{ cobbler_automation_gid }} -s /bin/bash -m -d /var/lib/{{ cobbler_automation_user }} {{ cobbler_automation_user }}
+chmod 700 /var/lib/{{ cobbler_automation_user }}/
+# Add key
+mkdir -p -m 700 /var/lib/{{ cobbler_automation_user }}/.ssh/
+echo '{{ cobbler_automation_pubkey }}' > /var/lib/{{ cobbler_automation_user }}/.ssh/authorized_keys
+chmod 600 /var/lib/{{ cobbler_automation_user }}/.ssh/authorized_keys
+chown -R {{ cobbler_automation_user }}:{{ cobbler_automation_group }} /var/lib/{{ cobbler_automation_user }}/
+# Add to sudo
+cat >/etc/sudoers.d/{{ cobbler_automation_user }} <<EOF
+{{ cobbler_automation_user }} ALL=(ALL) NOPASSWD:ALL
+EOF
+chmod 600 /etc/sudoers.d/{{ cobbler_automation_user }}

@@ -1,0 +1,55 @@
+---
+# Disable configuration of the repository which provides Cobbler
+# If you want to define the repository, toggle this to True and define the
+# repos configuration for either APT or YUM/DNF (see below).
+cobbler_configure_repos: False
+
+# Define the repository for installation with APT
+# cobbler_apt_repository: 'deb http://example.tld/cobbler/Debian_10/ /'
+
+# Define the repository for installation with YUM/DNF
+# cobbler_yum_repository: 'https://download.opensuse.org/repositories/systemsmanagement/CentOS_7/'
+
+# Cobbler GPG Key
+# cobbler_gpg_key: 'https://download.opensuse.org/repositories/systemsmanagement/CentOS_7/repodata/repomd.xml.key'
+
+# Define a list of custom templates
+#
+# This is useful when the templates provided in the role does not match the
+# need. Each item in the list defines the file name and the content.
+#
+# Example:
+# cobbler_autoinstall_templates:
+#   - name: myconfig.seed
+#     content: |
+#       d-i debian-installer/locale string en_US
+#       d-i keyboard-configuration/xkb-keymap select us
+#       d-i netcfg/choose_interface select auto
+#       [...]
+cobbler_autoinstall_templates: []
+
+# Array of cobbler settings
+# cobbler_settings:
+#   server: 192.168.0.1
+#   enable_ipxe: True
+cobbler_settings:
+
+# Cobbler distros (OS)
+# cobbler_distros:
+#   - name: distro_name
+#     netboot: # Information about netboot files initrd and kernel
+#       initrd_url: URL to the initrd file
+#       initrd_checksum: Checksum of the initrd file (optional)
+#       kernel_url: URL to the kernel file
+#       kernel_checksum: Checksum of the kernel file (optional)
+#     properties: # Dict of Cobbler properties, as defined in the plugin cobbler_distro
+#       breed: debian
+#       initrd: /var/lib/tftpboot/debian/11.2/debian-installer/amd64/initrd.gz
+#       kernel: /var/lib/tftpboot/debian/11.2/debian-installer/amd64/linux
+
+# Cobbler profiles
+# cobbler_profiles:
+#   - name: profile_name
+#     properties: # Dict of Cobbler properties, as defined in the plugin cobbler_profile
+#       distro: distro_name
+#       autoinstall: autoinstall_file

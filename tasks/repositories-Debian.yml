@@ -1,0 +1,21 @@
+---
+- name: Install gpg
+  ansible.builtin.package:
+    name: gpg
+
+- name: Install GPG-KEY
+  ansible.builtin.apt_key:
+    url: "{{ cobbler_gpg_key }}"
+    keyring: /etc/apt/trusted.gpg.d/cobbler.gpg
+
+- name: Configure Cobbler repository
+  ansible.builtin.copy:
+    content: "{{ cobbler_apt_repository }}\n"
+    dest: /etc/apt/sources.list.d/cobbler.list
+    owner: root
+    group: root
+    mode: 0644
+  notify: Update repository cache
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

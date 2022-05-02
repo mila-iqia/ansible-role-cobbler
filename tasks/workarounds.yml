@@ -1,0 +1,24 @@
+---
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+
+- name: Workaround grub2-mkconfig not found
+  ansible.builtin.file:
+    src: /usr/bin/grub-mkimage
+    dest: /usr/bin/grub2-mkimage
+    state: link
+    owner: root
+    group: root
+    mode: 1755
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Workaround libutil.c32 - https://github.com/cobbler/cobbler/issues/3058
+  ansible.builtin.copy:
+    src: /usr/lib/syslinux/modules/bios/libutil.c32
+    dest: /srv/tftp/libutil.c32
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - ansible_facts.packages['cobbler'][0].version < '3.3.3'

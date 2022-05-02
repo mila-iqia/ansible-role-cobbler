@@ -1,0 +1,16 @@
+---
+- name: Enable the Apache2 module rewrite
+  community.general.apache2_module:
+    name: rewrite
+    state: present
+  notify:
+    - Restart apache
+
+- name: Enable the Apache2 configuration for cobbler
+  ansible.builtin.file:
+    src: ../conf-available/cobbler.conf
+    dest: /etc/apache2/conf-enabled/cobbler.conf
+    state: link
+  notify:
+    - Restart apache
+
