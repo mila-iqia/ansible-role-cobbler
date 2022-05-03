@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 groupadd -g {{ cobbler_automation_gid }} {{ cobbler_automation_group }}
 useradd -u {{ cobbler_automation_uid }} -g {{ cobbler_automation_gid }} -s /bin/bash -m -d /var/lib/{{ cobbler_automation_user }} {{ cobbler_automation_user }}
 chmod 700 /var/lib/{{ cobbler_automation_user }}/
