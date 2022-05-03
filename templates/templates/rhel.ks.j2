@@ -36,9 +36,7 @@ skipx
 timezone  America/New_York
 # Install OS instead of upgrade
 install
-# Clear the Master Boot Record
-zerombr
-# Allow anaconda to partition the system as needed
+# Configure partitions
 $SNIPPET('partition')
 
 %pre

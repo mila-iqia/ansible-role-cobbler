@@ -47,6 +47,14 @@
   notify:
     - Restart cobbler
 
+- name: Copy snippets
+  ansible.builtin.template:
+    src: "snippets/{{ item }}.j2"
+    dest: "/var/lib/cobbler/snippets/{{ item }}"
+  loop:
+    - create_automation_user
+    - partition
+
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
 
