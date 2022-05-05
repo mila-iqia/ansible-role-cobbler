@@ -1,0 +1,41 @@
+---
+all:
+  vars:
+    cobbler_automation_pubkey: CHANGEME
+    ansible_connection: local
+    cobbler_api_host: localhost
+    cobbler_api_username: cobbler
+    cobbler_api_password: cobbler
+    cobbler_api_use_ssl: False
+    cobbler_automation_user: ansible
+    cobbler_automation_uid: 9999
+    cobbler_automation_group: ansible
+    cobbler_automation_gid: 9999
+    cobbler_settings:
+      # Crypt the password with `openssl passwd -1`
+      default_password_crypted: $1$23V3lPMD$uQU7SvEMX2S.E.Rj5UUhj.
+      manage_dhcp: true
+      manage_dns: true
+    # Define the Cobbler distros (OS)
+    cobbler_distros:
+      - name: debian-11
+        netboot:
+          initrd_url: http://debian.mirror.estruxture.net/debian/dists/bullseye/main/installer-amd64/20210731+deb11u3/images/netboot/debian-installer/amd64/initrd.gz
+          initrd_checksum: 'sha256:f8892c6b79817257a05a6d947be00ded56dbec057dff961dd1f526b0ab325320'
+          kernel_url: http://debian.mirror.estruxture.net/debian/dists/bullseye/main/installer-amd64/20210731+deb11u3/images/netboot/debian-installer/amd64/linux
+          kernel_checksum: 'sha256:b8e18400ca9c268334c2c1d5a911c2c1f4f522480a23bcaba1798b5c810edeea'
+        properties:
+          autoinstall_meta:
+            install_source_hostname: debian.mirror.estruxture.net
+            install_source_directory: /debian/
+          breed: debian
+          initrd: /var/lib/tftpboot/debian/11.2/debian-installer/amd64/initrd.gz
+          kernel: /var/lib/tftpboot/debian/11.2/debian-installer/amd64/linux
+    # Define the Cobbler profiles
+    cobbler_profiles:
+      - name: pve
+        properties:
+          distro: debian-11
+          autoinstall: debian.seed
+  hosts:
+    localhost:

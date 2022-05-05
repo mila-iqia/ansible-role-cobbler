@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: True
+  pre_tasks:
+
+
+    - name: Disable SELinux
+      ansible.posix.selinux:
+        state: disabled
+
+  roles:
+    - btravouillon.cobbler
