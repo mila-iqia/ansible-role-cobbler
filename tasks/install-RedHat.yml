@@ -1,0 +1,9 @@
+---
+- name: Install cobbler and bootloaders
+  ansible.builtin.package:
+    name:
+      - cobbler
+      - ipxe-roms
+      - ipxe-bootimgs
+      - shim
+      - syslinux
