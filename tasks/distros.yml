@@ -42,6 +42,7 @@
 - name: Configure Cobbler distros
   cobbler_distro:
     host: "{{ cobbler_api_host }}"
+    port: "{{ cobbler_api_port | default(omit) }}"
     use_ssl: "{{ cobbler_api_use_ssl | default(omit) }}"
     username: "{{ cobbler_api_username }}"
     password: "{{ cobbler_api_password }}"
