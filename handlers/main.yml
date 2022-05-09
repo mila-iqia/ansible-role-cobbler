@@ -13,8 +13,14 @@
     name: cobblerd
     state: restarted
   notify:
+    - Wait for cobblerd to be ready
     - Run cobbler mkloaders (would need a plugin)
     - Run cobbler sync (would need a plugin)
+
+- name: Wait for cobblerd to be ready
+  ansible.builtin.wait_for:
+    port: 25151
+    delay: 2
 
 - name: Run cobbler mkloaders (would need a plugin)
   ansible.builtin.command: cobbler mkloaders
