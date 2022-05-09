@@ -32,6 +32,10 @@
   notify:
     - Restart cobbler
 
+- name: Configure modules
+  ansible.builtin.include_tasks:
+    file: "modules.yml"
+
 - name: Apply workarounds to known issues
   ansible.builtin.include_tasks:
     file: "workarounds.yml"

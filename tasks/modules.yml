@@ -1,0 +1,34 @@
+---
+- name: Configure Dnsmasq to act as a DHCP and DNS server
+  block:
+    - name: Install dnsmasq
+      ansible.builtin.package:
+        name:
+          - dnsmasq
+
+    - name: Configure dhcp-range in dnsmasq.template
+      ansible.builtin.lineinfile:
+        path: /etc/cobbler/dnsmasq.template
+        regexp: '^dhcp-range='
+        line: "dhcp-range={{ cobbler_dnsmasq_dhcp_range }}"
+      when: cobbler_dnsmasq_dhcp_range is defined
+      notify: Restart cobbler
+
+    - name: Configure dhcp-options in dnsmasq.template
+      ansible.builtin.lineinfile:
+        path: /etc/cobbler/dnsmasq.template
+        regexp: "^dhcp-option={{ item.0 }},"
+        line: "dhcp-option={{ item.0 }},{{ item.1 }}"
+      loop: "{{ cobbler_dnsmasq_dhcp_options }}"
+      when: cobbler_dnsmasq_dhcp_options is defined
+      notify: Restart cobbler
+
+    - name: Enable dnsmasq in modules
+      community.general.ini_file:
+        path: /etc/cobbler/modules.conf
+        section: "{{ item }}"
+        option: module
+        value: managers.dnsmasq
+      loop: ['dns', 'dhcp']
+      notify: Restart cobbler
+  when: cobbler_dnsmasq_module

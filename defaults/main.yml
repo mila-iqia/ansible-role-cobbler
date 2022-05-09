@@ -53,3 +53,22 @@ cobbler_settings:
 #     properties: # Dict of Cobbler properties, as defined in the plugin cobbler_profile
 #       distro: distro_name
 #       autoinstall: autoinstall_file
+
+## Dnsmasq
+# To use Dnsmasq as DHCP and DNS servers managed by Cobbler, enable this
+# module.
+# Requires to configure `manage_dhcp: true` and `manage_dns: true` in
+# cobbler_settings, otherwise Cobbler will not configure the services.
+cobbler_dnsmasq_module: False
+
+# DHCP range
+# String compatible with Dnsmasq's dhcp-range parameter.
+# While Dnsmasq allows to repeat the 'dhcp-range' parameter, this role only
+# configures a single range for the sake of simplicity.
+# cobbler_dnsmasq_dhcp_range: '192.168.0.0,static'
+
+# DHCP options (see RFC 2132)
+# List of options compatible with Dnsmasq's dhcp-option parameter.
+# Each item of the list must be a tuple [ option id, option value ].
+# cobbler_dnsmasq_dhcp_options:
+#   - [ 3, '192.168.0.1' ]  # To configure the router
