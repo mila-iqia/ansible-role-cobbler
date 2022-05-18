@@ -53,6 +53,10 @@ cobbler_settings:
 #     properties: # Dict of Cobbler properties, as defined in the plugin cobbler_profile
 #       distro: distro_name
 #       autoinstall: autoinstall_file
+#     snippets: # list of snippets to install per_profile
+#       - name: partition
+#         content: |
+#           any content to put in $SNIPPET('partition')
 
 ## Dnsmasq
 # To use Dnsmasq as DHCP and DNS servers managed by Cobbler, enable this
