@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+{% if cobbler_custom_post_install is defined %}
+{{ cobbler_custom_post_install }}
+{% else %}
+# Define your custom script with variable `cobbler_custom_post_install`.
+{% endif %}
