@@ -32,11 +32,14 @@
   ansible.builtin.lineinfile:
     path: /var/lib/cobbler/scripts/preseed_late_default
     insertbefore: 'autoinstall_done'
-    line: $SNIPPET('create_automation_user')
+    line: "$SNIPPET('{{ item }}')"
     create: true
     owner: root
     group: root
     mode: '0644'
+  loop:
+    - create_automation_user
+    - custom_post_install
 
 - name: Configure Cobbler profiles
   cobbler_profile:

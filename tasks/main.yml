@@ -61,6 +61,7 @@
   loop:
     - create_automation_user
     - partition
+    - custom_post_install
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
