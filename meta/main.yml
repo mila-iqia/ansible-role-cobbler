@@ -18,9 +18,9 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: Debian
-    versions:
-    - bullseye
+    - name: Debian
+      versions:
+        - bullseye
 
   galaxy_tags:
     - cobbler

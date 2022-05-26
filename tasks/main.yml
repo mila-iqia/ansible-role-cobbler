@@ -18,7 +18,7 @@
     dest: /etc/cobbler/settings.d/local.settings
     owner: root
     group: root
-    mode: 0640
+    mode: '0640'
   when: cobbler_settings is defined and cobbler_settings
   notify:
     - Restart cobbler
@@ -46,7 +46,7 @@
     dest: /etc/cobbler/users.digest
     owner: root
     group: root
-    mode: 0640
+    mode: '0640'
   no_log: true
   notify:
     - Restart cobbler
@@ -55,6 +55,9 @@
   ansible.builtin.template:
     src: "snippets/{{ item }}.j2"
     dest: "/var/lib/cobbler/snippets/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop:
     - create_automation_user
     - partition

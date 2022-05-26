@@ -13,4 +13,3 @@
     state: link
   notify:
     - Restart apache
-

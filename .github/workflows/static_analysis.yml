@@ -1,0 +1,29 @@
+name: Static code analysis
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+
+jobs:
+  check:
+    name: Run static code analysis tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup python environment
+        uses: actions/setup-python@v3
+
+      - name: Install packages
+        run: pip install ansible-lint
+
+      - name: Run ansible linter
+        run: ansible-lint

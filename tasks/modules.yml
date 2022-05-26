@@ -29,6 +29,9 @@
         section: "{{ item }}"
         option: module
         value: managers.dnsmasq
+        owner: root
+        group: root
+        mode: '0600'
       loop: ['dns', 'dhcp']
       notify: Restart cobbler
   when: cobbler_dnsmasq_module

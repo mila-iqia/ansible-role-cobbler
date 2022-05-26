@@ -1,7 +1,7 @@
 ---
 - name: Update repository cache
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Restart apache
   ansible.builtin.service:

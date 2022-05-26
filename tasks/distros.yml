@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   loop: "{{ cobbler_distros }}"
   loop_control:
     label: "{{ item.properties.initrd | dirname }}"
@@ -15,6 +15,9 @@
     url: "{{ item.netboot.initrd_url }}"
     checksum: "{{ item.netboot.initrd_checksum | default(omit) }}"
     dest: "{{ item.properties.initrd }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop: "{{ cobbler_distros }}"
   loop_control:
     label: "{{ item.netboot.initrd_url }} -> {{ item.properties.initrd }}"
@@ -25,7 +28,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   loop: "{{ cobbler_distros }}"
   loop_control:
     label: "{{ item.properties.kernel | dirname }}"
@@ -35,6 +38,9 @@
     url: "{{ item.netboot.kernel_url }}"
     checksum: "{{ item.netboot.kernel_checksum | default(omit) }}"
     dest: "{{ item.properties.kernel }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop: "{{ cobbler_distros }}"
   loop_control:
     label: "{{ item.netboot.kernel_url }} -> {{ item.properties.kernel }}"
@@ -50,7 +56,7 @@
     state: "{{ item.state | default(omit) }}"
     properties: "{{ item.properties }}"
   delegate_to: localhost
-  become: False
+  become: false
   loop: "{{ cobbler_distros }}"
   loop_control:
     label: "{{ item.name }}"
@@ -61,11 +67,14 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   loop: "{{ cobbler_distros | subelements('snippets', skip_missing=True) }}"
 
 - name: Copy per_distro snippets
   ansible.builtin.copy:
     content: "{{ item.1.content }}"
     dest: "/var/lib/cobbler/snippets/per_distro/{{ item.1.name }}/{{ item.0.name }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop: "{{ cobbler_distros | subelements('snippets', skip_missing=True) }}"

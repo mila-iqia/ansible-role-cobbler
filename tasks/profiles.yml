@@ -3,6 +3,9 @@
   ansible.builtin.template:
     src: "templates/{{ item }}.j2"
     dest: "/var/lib/cobbler/templates/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop:
     - debian.seed
     - rhel.ks
@@ -11,6 +14,9 @@
   ansible.builtin.copy:
     content: "{{ item.content }}"
     dest: "/var/lib/cobbler/templates/{{ item.name }}"
+    owner: root
+    group: root
+    mode: '0644'
   loop: "{{ cobbler_autoinstall_templates }}"
   loop_control:
     label: "{{ item.name }}"
@@ -27,7 +33,10 @@
     path: /var/lib/cobbler/scripts/preseed_late_default
     insertbefore: 'autoinstall_done'
     line: $SNIPPET('create_automation_user')
-    create: yes
+    create: true
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Configure Cobbler profiles
   cobbler_profile:
@@ -51,11 +60,14 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
 
 - name: Copy per_profile snippets
   ansible.builtin.copy:
     content: "{{ item.1.content }}"
+    owner: root
+    group: root
+    mode: '0644'
     dest: "/var/lib/cobbler/snippets/per_profile/{{ item.1.name }}/{{ item.0.name }}"
   loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"

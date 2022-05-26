@@ -2,7 +2,7 @@
 # Disable configuration of the repository which provides Cobbler
 # If you want to define the repository, toggle this to True and define the
 # repos configuration for either APT or YUM/DNF (see below).
-cobbler_configure_repos: False
+cobbler_configure_repos: false
 
 # Define the repository for installation with APT
 # cobbler_apt_repository: 'deb http://example.tld/cobbler/Debian_10/ /'
@@ -12,6 +12,24 @@ cobbler_configure_repos: False
 
 # Cobbler GPG Key
 # cobbler_gpg_key: 'https://download.opensuse.org/repositories/systemsmanagement/CentOS_7/repodata/repomd.xml.key'
+
+# Credentials for the cobbler API
+cobbler_api_username: cobbler
+cobbler_api_password: CHANGEME
+
+# Automation user to create on systems during post-install
+cobbler_automation_user: cobbler
+cobbler_automation_uid: 500
+cobbler_automation_group: cobbler
+cobbler_automation_gid: 500
+
+# Define the public key to add in the authorized keys of the automation user
+# This is the preferred way to authenticate.
+# cobbler_automation_pubkey: 'your public key'
+
+# The default password for automation user
+# Used ONLY when the public key is not defined. This might obviously break automation.
+cobbler_automation_password: CHANGEME
 
 # Define a list of custom templates
 #
@@ -63,7 +81,7 @@ cobbler_settings:
 # module.
 # Requires to configure `manage_dhcp: true` and `manage_dns: true` in
 # cobbler_settings, otherwise Cobbler will not configure the services.
-cobbler_dnsmasq_module: False
+cobbler_dnsmasq_module: false
 
 # DHCP range
 # String compatible with Dnsmasq's dhcp-range parameter.
