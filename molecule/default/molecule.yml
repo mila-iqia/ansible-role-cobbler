@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: quay.io/actatux/debian-systemd:bullseye
+    image: "quay.io/actatux/${MOLECULE_DISTRO:-debian-systemd:bullseye}"
     override_command: false
     privileged: true
     pre_build_image: true

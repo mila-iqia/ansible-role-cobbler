@@ -1,0 +1,43 @@
+---
+name: Molecule unit testing
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.rst'
+
+jobs:
+  molecule_test:
+    name: ${{ matrix.distro }} - molecule test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - debian-systemd:bullseye
+
+    env:
+      MOLECULE_DISTRO: ${{ matrix.distro }}
+      PY_COLORS: 1
+      ANSIBLE_FORCE_COLOR: 1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: btravouillon.cobbler
+
+      - name: Setup python environment
+        uses: actions/setup-python@v3
+
+      - name: Install packages
+        run: pip install tox
+
+      - name: Run molecule test
+        run: |
+          cd btravouillon.cobbler && tox
