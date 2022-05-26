@@ -14,7 +14,7 @@
     dest: /etc/apt/sources.list.d/cobbler.list
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   notify: Update repository cache
 
 - name: Flush handlers

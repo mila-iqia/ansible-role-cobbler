@@ -9,7 +9,7 @@
     state: link
     owner: root
     group: root
-    mode: 1755
+    mode: '1755'
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Workaround libutil.c32 - https://github.com/cobbler/cobbler/issues/3058
@@ -18,7 +18,7 @@
     dest: /srv/tftp/libutil.c32
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
     remote_src: true
   when:
     - ansible_facts['os_family'] == "Debian"
