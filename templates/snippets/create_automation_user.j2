@@ -4,7 +4,11 @@ useradd -u {{ cobbler_automation_uid }} -g {{ cobbler_automation_gid }} -s /bin/
 chmod 700 /var/lib/{{ cobbler_automation_user }}/
 # Add key
 mkdir -p -m 700 /var/lib/{{ cobbler_automation_user }}/.ssh/
+{% if cobbler_automation_pubkey is defined %}
 echo '{{ cobbler_automation_pubkey }}' > /var/lib/{{ cobbler_automation_user }}/.ssh/authorized_keys
+{% else %}
+echo '{{ cobbler_automation_user}}:{{ cobbler_automation_password }}' | chpasswd
+{% endif %}
 chmod 600 /var/lib/{{ cobbler_automation_user }}/.ssh/authorized_keys
 chown -R {{ cobbler_automation_user }}:{{ cobbler_automation_group }} /var/lib/{{ cobbler_automation_user }}/
 # Add to sudo
