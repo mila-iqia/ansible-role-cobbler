@@ -23,6 +23,17 @@
       when: cobbler_dnsmasq_dhcp_options is defined
       notify: Restart cobbler
 
+    - name: Add support for UEFI in dnsmasq.template
+      ansible.builtin.lineinfile:
+        path: /etc/cobbler/dnsmasq.template
+        insertbefore: "^dhcp-boot=pxelinux.0"
+        line: "{{ item }}"
+      loop:
+        - "dhcp-vendorclass=UEFI,PXEClient:Arch:00007"
+        - "dhcp-vendorclass=UEFI,PXEClient:Arch:00009"
+        - "dhcp-boot=net:UEFI,grub/grubx86.efi"
+      notify: Restart cobbler
+
     - name: Enable dnsmasq in modules
       community.general.ini_file:
         path: /etc/cobbler/modules.conf
