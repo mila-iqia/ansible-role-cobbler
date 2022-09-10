@@ -219,7 +219,14 @@ tasksel tasksel/first multiselect standard
 #d-i pkgsel/run_tasksel boolean false
 
 # Individual additional packages to install
+#set $os_v = $getVar('os_version','')
+#if $breed == "ubuntu" and $os_v and $os_v.lower() == 'bionic'
+# ifupdown is required for ubuntu 18.04, so test os_v is not bionic.
+# Olders versions are not supported anymore.
+d-i pkgsel/include string openssh-server wget sudo gnupg ifupdown
+#else
 d-i pkgsel/include string openssh-server wget sudo gnupg
+#end if
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 #d-i pkgsel/upgrade select none
