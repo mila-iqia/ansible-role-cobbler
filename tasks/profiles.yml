@@ -65,6 +65,8 @@
     group: root
     mode: '0755'
   loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
+  loop_control:
+    label: "Create directory /var/lib/cobbler/snippets/per_profile/{{ item.1.name }}"
 
 - name: Copy per_profile snippets
   ansible.builtin.copy:
@@ -74,3 +76,5 @@
     mode: '0644'
     dest: "/var/lib/cobbler/snippets/per_profile/{{ item.1.name }}/{{ item.0.name }}"
   loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
+  loop_control:
+    label: "Install snippet /var/lib/cobbler/snippets/per_profile/{{ item.1.name }}/{{ item.0.name }}"
