@@ -9,8 +9,8 @@
   loop: "{{ cobbler_systems | subelements('snippets', skip_missing=True) }}"
 
 - name: Copy per_system snippets
-  ansible.builtin.copy:
-    content: "{{ item.1.content }}"
+  ansible.builtin.template:
+    src: per_snippet.j2
     dest: "/var/lib/cobbler/snippets/per_system/{{ item.1.name }}/{{ item.0.name }}"
     owner: root
     group: root
