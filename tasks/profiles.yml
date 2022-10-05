@@ -11,8 +11,8 @@
     - rhel.ks
 
 - name: Copy custom autoinstall templates
-  ansible.builtin.copy:
-    content: "{{ item.content }}"
+  ansible.builtin.template:
+    src: templates.j2
     dest: "/var/lib/cobbler/templates/{{ item.name }}"
     owner: root
     group: root
@@ -69,8 +69,8 @@
     label: "Create directory /var/lib/cobbler/snippets/per_profile/{{ item.1.name }}"
 
 - name: Copy per_profile snippets
-  ansible.builtin.copy:
-    content: "{{ item.1.content }}"
+  ansible.builtin.template:
+    src: per_snippet.j2
     owner: root
     group: root
     mode: '0644'

@@ -9,8 +9,8 @@
     keyring: /etc/apt/trusted.gpg.d/cobbler.gpg
 
 - name: Configure Cobbler repository
-  ansible.builtin.copy:
-    content: "{{ cobbler_apt_repository }}\n"
+  ansible.builtin.template:
+    src: apt_repository.j2
     dest: /etc/apt/sources.list.d/cobbler.list
     owner: root
     group: root

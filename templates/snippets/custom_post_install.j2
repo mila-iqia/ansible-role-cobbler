@@ -3,4 +3,7 @@
 {{ cobbler_custom_post_install }}
 {% else %}
 # Define your custom script with variable `cobbler_custom_post_install`.
+#if $getVar('packages', '') != ''
+sudo apt install -y $packages
+#end if
 {% endif %}

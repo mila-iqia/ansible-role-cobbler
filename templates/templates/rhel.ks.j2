@@ -50,6 +50,9 @@ $SNIPPET('pre_anamon')
 %packages
 openssh-server
 sudo
+#if $getVar('packages', '') != ''
+$packages
+#end if
 %end
 
 %post --nochroot
