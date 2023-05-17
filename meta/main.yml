@@ -1,6 +1,6 @@
 galaxy_info:
   role_name: cobbler
-  namespace: btravouillon
+  namespace: mila
   author: Bruno Travouillon
   description: Install and configure Cobbler service
 
