@@ -1,5 +1,6 @@
 ---
 - name: Configure Dnsmasq to act as a DHCP and DNS server
+  when: cobbler_dnsmasq_module
   block:
     - name: Install dnsmasq
       ansible.builtin.package:
@@ -45,4 +46,3 @@
         mode: '0600'
       loop: ['dns', 'dhcp']
       notify: Restart cobbler
-  when: cobbler_dnsmasq_module
