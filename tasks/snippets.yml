@@ -20,3 +20,33 @@
   loop: "{{ _snippet_conf }}"
   loop_control:
     label: "Install snippet /var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/{{ item.0.name }}"
+
+- name: Remove unmanaged snippets
+  when: cobbler_remove_unmanaged_snippets
+  block:
+    - name: "Define lists of managed snippets {{ _snippet_type }}"
+      ansible.builtin.set_fact:
+        _managed_snippets: "{{ (_managed_snippets | default([])) + ['/var/lib/cobbler/snippets/' + _snippet_type + '/' + item.1.name + '/' + item.0.name] }}"
+      loop: "{{ _snippet_conf }}"
+      loop_control:
+        label: "Add /var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/{{ item.0.name }} to _managed_snippets"
+
+    - name: "Find existing snippets {{ _snippet_type }}"
+      ansible.builtin.find:
+        paths: "/var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/"
+        file_type: file
+      loop: "{{ _snippet_conf }}"
+      loop_control:
+        label: "List snippets in /var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/"
+      register: _find_snippets
+
+    - name: "Define list of existing snippets {{ _snippet_type }}"
+      ansible.builtin.set_fact:
+        _existing_snippets: "{{ _find_snippets | community.general.json_query('results[*].files[*].path') | flatten | unique }}"
+
+    - name: "Remove unmanaged snippets {{ _snippet_type }}"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ _existing_snippets }}"
+      when: item not in _managed_snippets

@@ -94,3 +94,6 @@ cobbler_dnsmasq_module: false
 # Each item of the list must be a tuple [ option id, option value ].
 # cobbler_dnsmasq_dhcp_options:
 #   - [ 3, '192.168.0.1' ]  # To configure the router
+
+# Remove any unmanaged snippet in per_{system,profile,distro}
+cobbler_remove_unmanaged_snippets: true
