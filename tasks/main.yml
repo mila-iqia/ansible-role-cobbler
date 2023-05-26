@@ -62,6 +62,7 @@
     - apt_setup
     - create_automation_user
     - custom_post_install
+    - netcfg
     - partition
 
 - name: Flush handlers
