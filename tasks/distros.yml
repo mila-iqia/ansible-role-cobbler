@@ -61,20 +61,9 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Create per_distro snippets directories
-  ansible.builtin.file:
-    path: "/var/lib/cobbler/snippets/per_distro/{{ item.1.name }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  loop: "{{ cobbler_distros | subelements('snippets', skip_missing=True) }}"
-
-- name: Copy per_distro snippets
-  ansible.builtin.template:
-    src: per_snippet.j2
-    dest: "/var/lib/cobbler/snippets/per_distro/{{ item.1.name }}/{{ item.0.name }}"
-    owner: root
-    group: root
-    mode: '0644'
-  loop: "{{ cobbler_distros | subelements('snippets', skip_missing=True) }}"
+- name: Configure per_distro snippets
+  vars:
+    _snippet_type: per_distro
+    _snippet_conf: "{{ cobbler_distros | subelements('snippets', skip_missing=True) }}"
+  ansible.builtin.include_tasks:
+    file: "snippets.yml"

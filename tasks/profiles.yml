@@ -57,24 +57,9 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Create per_profile snippets directories
-  ansible.builtin.file:
-    path: "/var/lib/cobbler/snippets/per_profile/{{ item.1.name }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
-  loop_control:
-    label: "Create directory /var/lib/cobbler/snippets/per_profile/{{ item.1.name }}"
-
-- name: Copy per_profile snippets
-  ansible.builtin.template:
-    src: per_snippet.j2
-    owner: root
-    group: root
-    mode: '0644'
-    dest: "/var/lib/cobbler/snippets/per_profile/{{ item.1.name }}/{{ item.0.name }}"
-  loop: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
-  loop_control:
-    label: "Install snippet /var/lib/cobbler/snippets/per_profile/{{ item.1.name }}/{{ item.0.name }}"
+- name: Configure per_profile snippets
+  vars:
+    _snippet_type: per_profile
+    _snippet_conf: "{{ cobbler_profiles | subelements('snippets', skip_missing=True) }}"
+  ansible.builtin.include_tasks:
+    file: "snippets.yml"
