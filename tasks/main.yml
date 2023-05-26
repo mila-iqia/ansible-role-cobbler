@@ -59,9 +59,10 @@
     group: root
     mode: '0644'
   loop:
+    - apt_setup
     - create_automation_user
-    - partition
     - custom_post_install
+    - partition
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
