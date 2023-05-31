@@ -33,16 +33,14 @@
 
     - name: "Find existing snippets {{ _snippet_type }}"
       ansible.builtin.find:
-        paths: "/var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/"
+        paths: "/var/lib/cobbler/snippets/{{ _snippet_type }}/"
         file_type: file
-      loop: "{{ _snippet_conf }}"
-      loop_control:
-        label: "List snippets in /var/lib/cobbler/snippets/{{ _snippet_type }}/{{ item.1.name }}/"
+        recurse: true
       register: _find_snippets
 
     - name: "Define list of existing snippets {{ _snippet_type }}"
       ansible.builtin.set_fact:
-        _existing_snippets: "{{ _find_snippets | community.general.json_query('results[*].files[*].path') | flatten | unique }}"
+        _existing_snippets: "{{ _find_snippets | community.general.json_query('files[*].path') | flatten | unique }}"
 
     - name: "Remove unmanaged snippets {{ _snippet_type }}"
       ansible.builtin.file:
