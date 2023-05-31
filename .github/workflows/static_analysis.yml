@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-python@v3
 
       - name: Install packages
-        run: pip install 'ansible-lint<6.17.0' 'rich<13.4.0'
+        run: pip install 'ansible-lint<6.17.0'
 
       - name: Run ansible linter
         run: ansible-lint
