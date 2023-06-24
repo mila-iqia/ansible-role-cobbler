@@ -47,4 +47,4 @@
         path: "{{ item }}"
         state: absent
       loop: "{{ _existing_snippets }}"
-      when: item not in _managed_snippets
+      when: _managed_snippets is not defined or item not in _managed_snippets
