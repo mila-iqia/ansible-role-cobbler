@@ -106,24 +106,24 @@ $SNIPPET('apt_setup')
 
 
 ### Package selection
-tasksel tasksel/first multiselect standard
+#tasksel tasksel/first multiselect standard
 
 # Or choose to not get the tasksel dialog displayed at all (and don't install
 # any packages):
-#d-i pkgsel/run_tasksel boolean false
+d-i pkgsel/run_tasksel boolean false
 
 # Individual additional packages to install
 #set $os_v = $getVar('os_version','')
 #if $breed == "ubuntu" and $os_v and $os_v.lower() == 'bionic'
 # ifupdown is required for ubuntu 18.04, so test os_v is not bionic.
 # Olders versions are not supported anymore.
-d-i pkgsel/include string openssh-server wget sudo gnupg ifupdown
+d-i pkgsel/include string openssh-server wget sudo gnupg net-tools python3 ifupdown
 #else
-d-i pkgsel/include string openssh-server wget sudo gnupg
+d-i pkgsel/include string openssh-server wget sudo gnupg net-tools python3
 #end if
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
-#d-i pkgsel/upgrade select none
+d-i pkgsel/upgrade select full-upgrade
 
 # You can choose, if your system will report back on what software you have
 # installed, and what software you use. The default is not to report back,
