@@ -46,3 +46,12 @@
         mode: '0600'
       loop: ['dns', 'dhcp']
       notify: Restart cobbler
+
+    - name: Add dnsmasq options to dnsmasq.template
+      ansible.builtin.blockinfile:
+        path: /etc/cobbler/dnsmasq.template
+        block: "{{ cobbler_dnsmasq_options }}"
+        insertbefore: "^read-ethers"
+        marker: "### {mark} Ansible Managed Block - cobbler_dnsmasq_options ###"
+      when: cobbler_dnsmasq_options is defined
+      notify: Restart cobbler
