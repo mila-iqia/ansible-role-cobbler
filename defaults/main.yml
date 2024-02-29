@@ -53,6 +53,7 @@ cobbler_autoinstall_templates: []
 cobbler_settings:
 
 # Cobbler distros (OS)
+cobbler_distros: []
 # cobbler_distros:
 #   - name: distro_name
 #     netboot: # Information about netboot files initrd and kernel
@@ -66,6 +67,7 @@ cobbler_settings:
 #       kernel: /var/lib/tftpboot/debian/11.2/debian-installer/amd64/linux
 
 # Cobbler profiles
+cobbler_profiles: []
 # cobbler_profiles:
 #   - name: profile_name
 #     properties: # Dict of Cobbler properties, as defined in the plugin cobbler_profile
@@ -75,6 +77,9 @@ cobbler_settings:
 #       - name: partition
 #         content: |
 #           any content to put in $SNIPPET('partition')
+
+# Cobbler systems
+cobbler_systems: []
 
 ## Dnsmasq
 # To use Dnsmasq as DHCP and DNS servers managed by Cobbler, enable this
