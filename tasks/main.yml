@@ -71,14 +71,11 @@
 - name: Configure distros
   ansible.builtin.include_tasks:
     file: "distros.yml"
-  when: cobbler_distros is defined
 
 - name: Configure profiles
   ansible.builtin.include_tasks:
     file: "profiles.yml"
-  when: cobbler_profiles is defined
 
 - name: Configure systems
   ansible.builtin.include_tasks:
     file: "systems.yml"
-  when: cobbler_systems is defined
