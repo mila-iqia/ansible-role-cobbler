@@ -84,10 +84,10 @@ cobbler_settings:
 cobbler_dnsmasq_module: false
 
 # cobbler_dnsmasq_options, a 'BlockInFile' inserted 'As is' in /etc/cobbler/dnsmasq.template 
-#cobbler_dnsmasq_options: |
-#  interface=eth0
-#  dhcp-range=192.168.0.101,192.168.0.150
-#  dhcp-option=3,192.168.0.1
+# cobbler_dnsmasq_options: |
+#   interface=eth0
+#   dhcp-range=192.168.0.101,192.168.0.150
+#   dhcp-option=3,192.168.0.1
 
 # DHCP range
 # String compatible with Dnsmasq's dhcp-range parameter.
