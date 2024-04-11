@@ -7,3 +7,4 @@
       - pxelinux
       - shim-signed
       - syslinux
+      - python3-dnspython
