@@ -5,6 +5,6 @@
       - cobbler
       - ipxe
       - pxelinux
+      - python3-dnspython
       - shim-signed
       - syslinux
-      - python3-dnspython
