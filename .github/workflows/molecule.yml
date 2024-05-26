@@ -21,6 +21,7 @@ jobs:
       matrix:
         distro:
           - debian-systemd:bullseye
+          - debian-systemd:bookworm
 
     env:
       MOLECULE_DISTRO: ${{ matrix.distro }}

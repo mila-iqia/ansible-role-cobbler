@@ -21,6 +21,7 @@ galaxy_info:
     - name: Debian
       versions:
         - bullseye
+        - bookworm
 
   galaxy_tags:
     - cobbler
