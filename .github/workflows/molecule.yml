@@ -30,7 +30,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          path: btravouillon.cobbler
+          path: mila.cobbler
 
       - name: Setup python environment
         uses: actions/setup-python@v3
@@ -40,4 +40,4 @@ jobs:
 
       - name: Run molecule test
         run: |
-          cd btravouillon.cobbler && tox
+          cd mila.cobbler && tox
