@@ -1,8 +1,7 @@
 # Sample kickstart file for current EL, Fedora based distributions.
+# https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
 
 #platform=x86, AMD64, or Intel EM64T
-# System authorization information
-auth  --useshadow  --enablemd5
 # System bootloader configuration
 bootloader --location=mbr
 # Partition clearing information
@@ -34,8 +33,6 @@ selinux --disabled
 skipx
 # System timezone
 timezone  America/New_York
-# Install OS instead of upgrade
-install
 # Configure partitions
 $SNIPPET('partition')
 
