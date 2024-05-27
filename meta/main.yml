@@ -6,7 +6,7 @@ galaxy_info:
 
   license: MIT
 
-  min_ansible_version: "2.12"
+  min_ansible_version: "2.15"
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
@@ -21,6 +21,7 @@ galaxy_info:
     - name: Debian
       versions:
         - bullseye
+        - bookworm
 
   galaxy_tags:
     - cobbler
