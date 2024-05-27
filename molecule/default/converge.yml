@@ -3,9 +3,9 @@
   hosts: all
   vars:
     cobbler_configure_repos: true
-    cobbler_apt_repository: 'deb http://pkgs.travouillon.fr/debian/ bullseye main'
+    cobbler_apt_repository: "deb http://pkgs.travouillon.fr/debian/ {{ ansible_facts['distribution_release'] }} main"
     cobbler_gpg_key: 'http://pkgs.travouillon.fr/debian/DEB-GPG-KEY-BrunoTravouillon'
   tasks:
     - name: "Include cobbler"
       ansible.builtin.include_role:
-        name: "btravouillon.cobbler"
+        name: "mila.cobbler"
