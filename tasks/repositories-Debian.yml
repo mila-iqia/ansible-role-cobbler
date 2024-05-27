@@ -2,11 +2,13 @@
 - name: Install gpg
   ansible.builtin.package:
     name: gpg
+  when: cobbler_gpg_key is defined
 
 - name: Install GPG-KEY
   ansible.builtin.apt_key:
     url: "{{ cobbler_gpg_key }}"
     keyring: /etc/apt/trusted.gpg.d/cobbler.gpg
+  when: cobbler_gpg_key is defined
 
 - name: Configure Cobbler repository
   ansible.builtin.template:
