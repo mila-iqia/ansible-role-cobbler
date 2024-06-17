@@ -1,7 +1,6 @@
 ---
-- hosts: all
-  name: Prepare the environment
-
+- name: Prepare the environment
+  hosts: all
   tasks:
     - name: "Update APT cache"
       ansible.builtin.apt:
