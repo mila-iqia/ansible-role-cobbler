@@ -36,7 +36,7 @@ $SNIPPET('netcfg')
 d-i mirror/country string manual
 d-i mirror/http/hostname string $install_source_hostname
 d-i mirror/http/directory string $install_source_directory
-d-i mirror/http/proxy string
+d-i mirror/http/proxy string {% if cobbler_proxy_url is defined %}{{ cobbler_proxy_url }}{% endif +%}
 
 # Suite to install.
 #d-i mirror/suite string testing
