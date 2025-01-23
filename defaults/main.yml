@@ -13,6 +13,9 @@ cobbler_configure_repos: false
 # Cobbler GPG Key
 # cobbler_gpg_key: 'https://download.opensuse.org/repositories/systemsmanagement/CentOS_7/repodata/repomd.xml.key'
 
+# Define a proxy for the installation if necessary.
+# cobbler_proxy_url: http://192.168.0.100:3128
+
 # Credentials for the cobbler API
 cobbler_api_username: cobbler
 cobbler_api_password: CHANGEME
