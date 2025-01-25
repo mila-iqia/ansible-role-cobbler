@@ -32,7 +32,7 @@
       loop:
         - "dhcp-vendorclass=UEFI,PXEClient:Arch:00007"
         - "dhcp-vendorclass=UEFI,PXEClient:Arch:00009"
-        - "dhcp-boot=net:UEFI,grub/grubx86.efi"
+        - "dhcp-boot=net:UEFI,grub/grubx64.efi"
       notify: Restart cobbler
 
     - name: Enable dnsmasq in modules
