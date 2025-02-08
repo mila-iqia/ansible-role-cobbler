@@ -7,6 +7,23 @@
         name:
           - dnsmasq
 
+    - name: Create dnsmasq.service.d drop-in directory
+      ansible.builtin.file:
+        path: /etc/systemd/system/dnsmasq.service.d/
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Disable StartLimitIntervalSec in dnsmasq.service
+      ansible.builtin.copy:
+        content: "[Unit]\nStartLimitIntervalSec=0"
+        dest: /etc/systemd/system/dnsmasq.service.d/override.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Daemon-reload dnsmasq
+
     - name: Configure dhcp-range in dnsmasq.template
       ansible.builtin.lineinfile:
         path: /etc/cobbler/dnsmasq.template

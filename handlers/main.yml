@@ -27,3 +27,8 @@
 
 - name: Run cobbler sync (would need a plugin)
   ansible.builtin.command: cobbler sync
+
+- name: Daemon-reload dnsmasq
+  ansible.builtin.systemd_service:
+    name: dnsmasq.service
+    daemon_reload: true
